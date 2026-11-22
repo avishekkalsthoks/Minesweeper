@@ -1,6 +1,8 @@
 #include<stdio.h>
 #include<SDL3/SDL.h>
 #include<stdint.h>
+#include<stdlib.h>
+
 typedef uint8_t ui8;
 typedef uint32_t ui32;
 typedef uint64_t ui64;
@@ -25,7 +27,7 @@ int main(void) {
     HEIGHT
     ,0);
     if (window==NULL){
-		fprintf(sdlerr,"SDL create window failed %s",SDL_GetError());
+		fprintf(stderr,"SDL create window failed %s",SDL_GetError());
 		SDL_Quit();
 		return EXIT_FAILURE;
 	}
@@ -47,7 +49,7 @@ int main(void) {
 		SDL_DestroyRenderer(renderer);
 		SDL_DestroyWindow(window);
 		SDL_Quit();
-		return EXIT_FAILURE;
+		return EXIT_FAILURE;    
 	}
     ui8 is_running = 1;
     while(is_running){
