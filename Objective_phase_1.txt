@@ -1,0 +1,2 @@
+- Generate X in the corresponding boxes
+- Generate the number arround the mines hinting the player about the number of mines in the place
