@@ -1,4 +1,4 @@
-#Minesweeper
+# Minesweeper
 
 A classic terminal-based Minesweeper game written in C. 
 
