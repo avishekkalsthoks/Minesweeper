@@ -1,6 +1,6 @@
 # Minesweeper
 
-A classic terminal-based Minesweeper game written in C. 
+A classic Minesweeper game written in C. 
 
 Mines are placed randomly across the grid, and the player must pinpoint their locations and flag them without detonating the mines. Digging up a safe square reveals the number of mines in the surrounding 3×3 neighborhood, providing clues to clear the rest of the board. Built as a personal skill-maxing project in C.
 ## Screenshots
