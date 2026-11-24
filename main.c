@@ -1,4 +1,4 @@
-        #include<stdio.h>
+#include<stdio.h>
 #include<SDL3/SDL.h>
 #include<stdint.h>
 #include<stdlib.h>
@@ -18,6 +18,7 @@ void clear(ui32 color){
 }
 int main(void) {
     Pos locl[SIZE_LOC];
+    int game_over = 0;
     for (int q = 0; q<=SIZE_LOC;q++){
         locl[q].x = -1;
         locl[q].y = -1;
@@ -40,8 +41,6 @@ int main(void) {
 		fprintf(stderr,"SDL Init failed %s",SDL_GetError());
 		return EXIT_FAILURE;
 	}
-    
-    
     window = SDL_CreateWindow("Test",
     WIDTH*3, 
     HEIGHT*3
@@ -74,6 +73,7 @@ int main(void) {
 	}
     ui8 is_running = 1;
     ui32 frame = 0;
+    int flag[2];
     while(is_running){
     ui64 start = SDL_GetPerformanceCounter();
     Pos l = {-1,-1};
@@ -84,16 +84,17 @@ int main(void) {
 				} 
             else if (event.type == SDL_EVENT_MOUSE_BUTTON_DOWN){
                 if (event.button.button == SDL_BUTTON_LEFT){
-                    l.x = (int)(event.button.x/60 -1);
-                    l.y = (int)(event.button.y/60 -2);
+                    l.x = (int)(event.button.x/60 )-1;
+                    l.y = (int)(event.button.y/60 )-2;
                 } 
                 if (event.button.button == SDL_BUTTON_RIGHT){
-                    r.x = (int)(event.button.x/60 -1);
-                    r.y = (int)(event.button.y/60 -2);
+                    r.x = (int)(event.button.x/60)-1;
+                    r.y = (int)(event.button.y/60)-2;
                 }
             }
 			 }
-    clear(0x00FFFF);
+    if(!game_over){
+    clear(0x575757);
     // Below this all the graphics thing are done
     
     if (l.x >=0 && l.y >=0){
@@ -103,10 +104,13 @@ int main(void) {
         ol++;}
     }
     if (r.x >=0 && r.y >= 0){
+        if (in_list_or_not(r.x,r.y,locr,SIZE_LOC)){
+        removee(r.x,r.y,locr,SIZE_LOC);
+        }else{
         if (!in_list_or_not(r.x,r.y,locl,SIZE_LOC)){
         locr[or].x = r.x; 
         locr[or].y= r.y;}
-        or++;
+        or++;}
     }
     
     // Borders setup
@@ -114,22 +118,23 @@ int main(void) {
         for (int x = 0; x<WIDTH;x++){
             if (x<Grid_size || (x>(320-Grid_size)))
             {
-                put_pixel(x,y,0xE8E8E8, framebuffer);
+                put_pixel(x,y,0x546373, framebuffer);
             }
             else if (y<Grid_size*2 || y>(200-Grid_size))
             {
-                put_pixel(x,y,0xE8E8E8,framebuffer);
+                put_pixel(x,y,0x546373,framebuffer);
             }
             else if (x%Grid_size==0)
             {
-                put_pixel(x,y,0x0000FF,framebuffer);
+                put_pixel(x,y,0x242B32,framebuffer);
             }
             else if (y%Grid_size==0)
             {
-                put_pixel(x,y,0x0000FF,framebuffer);
+                put_pixel(x,y,0x242B32,framebuffer);
             }
         }
     }
+    score_board(120,10,framebuffer,flag);
     int i = 0;
     int k =0;
     while (i!=ol+1){
@@ -137,6 +142,7 @@ int main(void) {
             dig_at(locl[i].x,locl[i].y,framebuffer,mines,SIZE);}
         else {
             draw_mine(locl[i].x,locl[i].y,framebuffer);
+            game_over = 1;
         }
         i++;
     }
@@ -144,6 +150,8 @@ int main(void) {
             flag_at(locr[k].x,locr[k].y,framebuffer);
         k++;
     }
+    num_counter(locr,SIZE_LOC,flag);
+}
     // Above this all the graphics thing are done 
 	SDL_UpdateTexture(
 	texture,
