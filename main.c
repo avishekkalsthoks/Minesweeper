@@ -17,15 +17,18 @@ void clear(ui32 color){
     }
 }
 int main(void) {
-    Pos locl[50];
-    for (int q = 0; q<=50;q++){
+    Pos locl[SIZE_LOC];
+    for (int q = 0; q<=SIZE_LOC;q++){
         locl[q].x = -1;
         locl[q].y = -1;
     }
-    // Pos locr[60];
-
+    Pos locr[SIZE_LOC];
+    for (int q = 0; q<=SIZE_LOC;q++){
+        locr[q].x = -1;
+        locr[q].y = -1;
+    }
     int ol=0;
-    int or =0;
+    int or=0;
     srand(time(NULL));
     Pos mines[SIZE];
     coords(mines);   
@@ -85,8 +88,8 @@ int main(void) {
                     l.y = (int)(event.button.y/60 -2);
                 } 
                 if (event.button.button == SDL_BUTTON_RIGHT){
-                    r.x = (int)(event.button.x/1);
-                    r.y = (int)(event.button.y/1);
+                    r.x = (int)(event.button.x/60 -1);
+                    r.y = (int)(event.button.y/60 -2);
                 }
             }
 			 }
@@ -94,21 +97,18 @@ int main(void) {
     // Below this all the graphics thing are done
     
     if (l.x >=0 && l.y >=0){
+        if (!in_list_or_not(l.x,l.y,locr,SIZE_LOC)){
         locl[ol].x = l.x; 
         locl[ol].y= l.y;
-        ol++;
+        ol++;}
     }
-    // if (frame%60==0){
-    //     for (int i = 0; i< ol+1; i++){
-    //         SDL_Log("[%d,%d]", locl[i].x, locl[i].y );
-    // }}
-    
-    if (r.x>=0 && r.y >= 0){
-        // locr[or].x = r.x; 
-        // locr[or].y= r.y;
-        //flag_at(r.x,r.y,framebuffer,mines);
+    if (r.x >=0 && r.y >= 0){
+        if (!in_list_or_not(r.x,r.y,locl,SIZE_LOC)){
+        locr[or].x = r.x; 
+        locr[or].y= r.y;}
         or++;
     }
+    
     // Borders setup
     for (int y = 0 ; y <HEIGHT;y++){
         for (int x = 0; x<WIDTH;x++){
@@ -131,13 +131,18 @@ int main(void) {
         }
     }
     int i = 0;
+    int k =0;
     while (i!=ol+1){
-        if (!in_list_or_not(locl[i].x,locl[i].y,mines)){
-            dig_at(locl[i].x,locl[i].y,framebuffer,mines);}
+        if (!in_list_or_not(locl[i].x,locl[i].y,mines,SIZE)){
+            dig_at(locl[i].x,locl[i].y,framebuffer,mines,SIZE);}
         else {
             draw_mine(locl[i].x,locl[i].y,framebuffer);
         }
         i++;
+    }
+    while (k!=or+1){
+            flag_at(locr[k].x,locr[k].y,framebuffer);
+        k++;
     }
     // Above this all the graphics thing are done 
 	SDL_UpdateTexture(

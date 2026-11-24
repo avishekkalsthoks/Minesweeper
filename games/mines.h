@@ -8,7 +8,8 @@
 enum {
     SIZE = 20,
     W_BOUND = 13,
-    H_BOUND = 6 
+    H_BOUND = 6,
+    SIZE_LOC = 60 
 };
 
 typedef struct {
@@ -18,8 +19,8 @@ typedef struct {
 
 int randint(int a, int b);
 void coords(Pos mine_pos[]);
-int in_list_or_not(int a, int b, Pos mine_pos[]);
-int num_of_mines(int a, int b, Pos mine_pos[]);
+int in_list_or_not(int a, int b, Pos mine_pos[], int size);
+int num_of_mines(int a, int b, Pos mine_pos[],int size);
 void put_pixel(int x, int y , int color , int arr[]);
 void draw_mine(int x,int y, int arr[] );
 void draw_one(int x,int y, int arr[] );
@@ -30,7 +31,7 @@ void draw_five(int x,int y, int arr[] );
 void draw_six(int x,int y, int arr[] );
 void draw_seven(int x,int y, int arr[] );
 void draw_eight(int x,int y, int arr[] );
-void dig_at(int x,int y, int arr[], Pos mine[]);
-void flag_at(int x,int y, int arr[], Pos mine[]);
+void dig_at(int x,int y, int arr[], Pos mine[],int size);
+void flag_at(int x,int y, int arr[]);
 
 #endif

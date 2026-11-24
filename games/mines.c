@@ -27,9 +27,9 @@ void coords(Pos mine_pos[]) {
     }
 }
 
-int in_list_or_not(int a, int b, Pos mine_pos[]){
+int in_list_or_not(int a, int b, Pos mine_pos[],int size){
     int i = 0;
-    while(i<SIZE){
+    while(i<size){
         if (mine_pos[i].x == a && mine_pos[i].y == b){
             return 1;
         }
@@ -38,14 +38,14 @@ int in_list_or_not(int a, int b, Pos mine_pos[]){
     return 0;
 }
 
-int num_of_mines(int a, int b, Pos mine_pos[]){
+int num_of_mines(int a, int b, Pos mine_pos[],int size){
     int n = 0;
     for (int i = -1; i<2;i++){
         for (int j = -1; j<2;j++){
             if (((i+a == a) && (j+b == b)) || (i+a < 0) || (j+b < 0) || (i+a > W_BOUND + 2) || (j+b>H_BOUND+2)){
 
             } else {
-                if (in_list_or_not(i+a,j+b,mine_pos)){
+                if (in_list_or_not(i+a,j+b,mine_pos,size)){
                     n++;
                 }
             }
@@ -170,10 +170,30 @@ void draw_eight(int x,int y, int arr[] ){
         }
     }
 }
-void dig_at(int i,int j, int arr[], Pos mine[]){
+void flag_at(int x,int y, int arr[] ){
+    if (x>= 0 && y>=0 && x <= 20 && y <=20){
+    for (int i = 3; i< Grid_size-2;i++){
+        for (int j =3; j< Grid_size-2;j++){
+            if (i==8){
+                put_pixel((x+1)*Grid_size+i,(y+2)*Grid_size+j,0xFF0000,arr);
+            }
+            if (j==11 && i>=8){
+                put_pixel((x+1)*Grid_size+i,(y+2)*Grid_size+j,0xFF0000,arr);
+            }
+        }
+    }
+    for (int i = 8;i<Grid_size-2 ; i++){
+        if (i>=8){
+                put_pixel((x+1)*Grid_size+i,(y+2)*Grid_size+i-6,0xFF0000,arr);
+            }
+    }
+}
+
+}
+void dig_at(int i,int j, int arr[], Pos mine[],int size){
     if (i>= 0 && j>=0 && i <= 20 && j <=20){
-        if (!in_list_or_not(i,j,mine)){
-                switch (num_of_mines(i,j,mine))
+        if (!in_list_or_not(i,j,mine,size)){
+                switch (num_of_mines(i,j,mine,size))
                 {
                 case 0:
                     break;
