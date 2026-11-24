@@ -31,6 +31,7 @@ int main(void) {
     int ol=0;
     int or=0;
     srand(time(NULL));
+    int click;
     Pos mines[SIZE];
     coords(mines);   
     SDL_Window *window;
@@ -86,10 +87,14 @@ int main(void) {
                 if (event.button.button == SDL_BUTTON_LEFT){
                     l.x = (int)(event.button.x/60 )-1;
                     l.y = (int)(event.button.y/60 )-2;
+                    if (game_over){
+                        click = 1;
+                    }
                 } 
                 if (event.button.button == SDL_BUTTON_RIGHT){
                     r.x = (int)(event.button.x/60)-1;
                     r.y = (int)(event.button.y/60)-2;
+                    
                 }
             }
 			 }
@@ -151,6 +156,23 @@ int main(void) {
         k++;
     }
     num_counter(locr,SIZE_LOC,flag);
+}else {
+    clear(0x575757);
+    game_over_msg(framebuffer);
+    if (click){
+    for (int q = 0; q<=SIZE_LOC;q++){
+        locl[q].x = -1;
+        locl[q].y = -1;
+    }
+    for (int q = 0; q<=SIZE_LOC;q++){
+        locr[q].x = -1;
+        locr[q].y = -1;
+    }
+    click = 0;
+    game_over = 0;
+    coords(mines);  
+}
+
 }
     // Above this all the graphics thing are done 
 	SDL_UpdateTexture(

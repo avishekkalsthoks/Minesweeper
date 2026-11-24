@@ -26,7 +26,6 @@ void coords(Pos mine_pos[]) {
         }
     }
 }
-
 int in_list_or_not(int a, int b, Pos mine_pos[],int size){
     int i = 0;
     while(i<size){
@@ -293,67 +292,67 @@ void score_board(int x,int y,int arr[],int flag[]){
     switch (flag[1])
                 {
                 case 0:
-                draw_zero0(x+20,10,arr);
+                draw_digit(x+30,15,DIGITS[0],arr);
                     break;
                 case 1:
-                    draw_one1(x+20,10,arr);
+                draw_digit(x+30,15,DIGITS[1],arr);
                     break;
                 case 2:
-                    draw_two2(x+20,10,arr);
+                draw_digit(x+30,15,DIGITS[2],arr);
                     break;
                 case 3: 
-                    draw_three3(x+20,10,arr);
+                draw_digit(x+30,15,DIGITS[3],arr);
                     break;
                 case 4:
-                draw_four4(x+20,10,arr);
+                draw_digit(x+30,15,DIGITS[4],arr);
                     break;
                 case 5:
-                    draw_five5(x+20,10,arr);
+                draw_digit(x+30,15,DIGITS[5],arr);
                     break;
                 case 6:
-                    draw_six6(x+20,10,arr);
+                draw_digit(x+30,15,DIGITS[6],arr);
                     break;
                 case 7:
-                    draw_seven7(x+20,10,arr);
+                draw_digit(x+30,15,DIGITS[7],arr);
                     break;
                 case 8:
-                    draw_eight8(x+20,10,arr);
+                draw_digit(x+30,15,DIGITS[8],arr);
                     break;
                 case 9:
-                    draw_nine9(x+20,10,arr);
+                    draw_digit(x+30,15,DIGITS[9],arr);
+
                     break;
                 }
          switch (flag[0])
                 {
                 case 0:
-                    draw_zero0(x+40,10,arr);
+                draw_digit(x+45,15,DIGITS[0],arr);
                     break;
                 case 1:
-                    draw_one1(x+40,10,arr);
-                    break;
+                draw_digit(x+45,15,DIGITS[1],arr);                    break;
                 case 2:
-                    draw_two2(x+40,10,arr);
+                draw_digit(x+45,15,DIGITS[2],arr);
                     break;
                 case 3: 
-                    draw_three3(x+40,10,arr);
+                draw_digit(x+45,15,DIGITS[3],arr);
                     break;
                 case 4:
-                draw_four4(x+40,10,arr);
+                draw_digit(x+45,15,DIGITS[4],arr);
                     break;
                 case 5:
-                    draw_five5(x+40,10,arr);
+                draw_digit(x+45,15,DIGITS[5],arr);
                     break;
                 case 6:
-                    draw_six6(x+40,10,arr);
+                draw_digit(x+45,15,DIGITS[6],arr);
                     break;
                 case 7:
-                    draw_seven7(x+40,10,arr);
+                draw_digit(x+45,15,DIGITS[7],arr);
                     break;
                 case 8:
-                    draw_eight8(x+40,10,arr);
+                draw_digit(x+45,15,DIGITS[8],arr);
                     break;
                 case 9:
-                    draw_nine9(x+40,10,arr);
+                    draw_digit(x+45,15,DIGITS[9],arr);
                     break;
                 }
 }
@@ -375,131 +374,33 @@ void num_counter(Pos arr[],int size,int flag[]){
     flag[0]=n%10;
     flag[1]= (int)(n/10);
 }
-void draw_one1(float x,float y, int arr[] ){
-    for (int i = 3; i< Grid_size-2;i++){
-        for (int j =4; j< Grid_size-3;j++){
-            if (i==12){
-                put_pixel(x+i,y+j,0xFFFFFF,arr);
+
+void draw_char(int x,int y, const int ch[15][15],int arr[]){
+    for (int i =0 ; i<15;i++){
+        for (int j = 0; j<15;j++){
+            if (ch[i][j]){
+                put_pixel(x+j,y+i,0xCD1C18,arr);
             }
         }
     }
 }
-void draw_two2(float x,float y, int arr[] ){
-    for (int i = 3; i< Grid_size-2;i++){
-        for (int j =3; j< Grid_size-2;j++){
-            if (j==4 || j==10 || j == 15){
-                put_pixel(x+i,y+j,0xFFFFFF,arr);
-            }
-            if ((i==Grid_size-3 && j>=4 && j <=10) || (i == 3 && j>=10 && j<=15)){
-                put_pixel(x+i,y+j,0xFFFFFF,arr);
-            }
-        }
-    }
+void game_over_msg(int arr[]){
+    draw_char(105,90,G,arr);
+    draw_char(120,90,A,arr);
+    draw_char(135,90,M,arr);
+    draw_char(150,90,E,arr);
+    draw_char(175,90,O,arr);
+    draw_char(190,90,V,arr);
+    draw_char(205,90,E,arr);
+    draw_char(220,90,R,arr);
+    draw_char(230,90,EXCLAMATION,arr);
+
 }
-void draw_three3(float x,float y, int arr[] ){
-    for (int i = 3; i< Grid_size-2;i++){
-        for (int j =3; j< Grid_size-2;j++){
-            if (j==4 || j==10 || j == 15){
-                put_pixel(x+i,y+j,0xFFFFFF,arr);
-            }
-            if ((i==Grid_size-3 && j>=4 && j <=10) || (i == Grid_size-3 && j>=10 && j<=15)){
-                put_pixel(x+i,y+j,0xFFFFFF,arr);
-            }
-        }
-    }
-}
-void draw_four4(float x,float y, int arr[] ){
-    for (int i = 3; i< Grid_size-2;i++){
-        for (int j =4; j< Grid_size-2;j++){
-            if (i==12){
-                put_pixel(x+i,y+j,0xFFFFFF,arr);
-            }
-            if (i==5 && j<=10){
-                put_pixel(x+i,y+j,0xFFFFFF,arr);
-            }
-            if (j==10 && i<=12 && i>=5){
-                put_pixel(x+i,y+j,0xFFFFFF,arr);
-            }
-        }
-    }
-}
-void draw_five5(float x,float y, int arr[] ){
-    for (int i = 3; i< Grid_size-2;i++){
-        for (int j =3; j< Grid_size-2;j++){
-            if (j==4 || j==10 || j == 15){
-                put_pixel(x+i,y+j,0xFFFFFF,arr);
-            }
-            if ((i==3 && j>=4 && j <=10) || (i == Grid_size-3 && j>=10 && j<=15)){
-                put_pixel(x+i,y+j,0xFFFFFF,arr);
-            }
-        }
-    }
-}
-void draw_six6(float x,float y, int arr[] ){
-    for (int i = 3; i< Grid_size-2;i++){
-        for (int j =3; j< Grid_size-2;j++){
-            if (j==4 || j==10 || j == 15){
-                put_pixel(x+i,y+j,0xFFFFFF,arr);
-            }
-            if ((i==3 && j>=4 && j <=10) || ((i == Grid_size-3||i==3) && j>=10 && j<=15)){
-                put_pixel(x+i,y+j,0xFFFFFF,arr);
-            }
-        }
-    }
-}
-void draw_seven7(float x,float y, int arr[] ){
-    for (int i = 3; i< Grid_size-2;i++){
-        for (int j =3; j< Grid_size-2;j++){
-            if (j == 4){
-                put_pixel(x+i,y+j,0xFFFFFF,arr);
-            }}
-    }
-    for (int i = 3; i< Grid_size-3;i++){
-            put_pixel(x+i,y-i+Grid_size,0xFFFFFF,arr);
-            put_pixel(x+i+1,y-i+Grid_size,0xFFFFFF,arr);
-        }
-    }
-void draw_eight8(float x,float y, int arr[] ){
-    for (int i = 3; i< Grid_size-2;i++){
-        for (int j =3; j< Grid_size-2;j++){
-            if (j==4 || j==10 || j == 15){
-                put_pixel(x+i,y+j,0xFFFFFF,arr);
-            }
-            if ((i==3 && j>=4 && j <=10) || (i == Grid_size-3 && j>=10 && j<=15)){
-                put_pixel(x+i,y+j,0xFFFFFF,arr);
-            }
-            if ((i==Grid_size-3 && j>=4 && j <=10) || (i == 3 && j>=10 && j<=15)){
-                put_pixel(x+i,y+j,0xFFFFFF,arr);
-            }
-        }
-    }
-}
-void draw_zero0(float x,float y, int arr[] ){
-    for (int i = 3; i< Grid_size-2;i++){
-        for (int j =3; j< Grid_size-2;j++){
-            if (j==4 || j == 15){
-                put_pixel(x+i,y+j,0xFFFFFF,arr);
-            }
-            if ((i==3 && j>=5 && j <=10) || (i == Grid_size-3 && j>=10 && j<=15)){
-                put_pixel(x+i,y+j,0xFFFFFF,arr);
-            }
-            if ((i==Grid_size-3 && j>=5 && j <=10) || (i == 3 && j>=10 && j<=15)){
-                put_pixel(x+i,y+j,0xFFFFFF,arr);
-            }
-        }
-    }
-}
-void draw_nine9(float x,float y, int arr[] ){
-    for (int i = 3; i< Grid_size-2;i++){
-        for (int j =3; j< Grid_size-2;j++){
-            if (j==4 || j==10 || j == 15){
-                put_pixel(x+i,y+j,0xFFFFFF,arr);
-            }
-            if ((i==3 && j>=4 && j <=10) || (i == Grid_size-3 && j>=10 && j<=15)){
-                put_pixel(x+i,y+j,0xFFFFFF,arr);
-            }
-            if ((i==Grid_size-3 && j>=5 && j <=10)){
-                put_pixel(x+i,y+j,0xFFFFFF,arr);
+void draw_digit(int x, int y, const int ch[14][14], int arr[]) {
+    for (int i = 0; i < 14; i++) {
+        for (int j = 0; j < 14; j++) {
+            if (ch[i][j]) {
+                put_pixel(x + j, y + i, 0xFFFFFF, arr);
             }
         }
     }
