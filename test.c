@@ -1,34 +1,60 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<time.h>
-typedef struct{
-        int x;
-        int y;
-}Pos;
-const int size=25;
-const int w_bound=10;
-const int h_bound=10;
-int randint(int a, int b){
-return (rand() % (a-b+1) + a);
-}
-int main(){
-srand(time(NULL));
-Pos mine_pos[size];
-int i = 0 ;
-mine_pos[0].x = randint(1,w_bound);
-mine_pos[0].y  = randint(1,h_bound);
-while(i<size){
-        mine_pos[i].x = randint(1,w_bound);
-        mine_pos[i].y = randint(1,h_bound);
-        for (int j=0;j<i;j++){
-                if ((mine_pos[j].x == mine_pos[j+1].x) && (mine_pos[j+1].y == mine_pos[j].y)){
-                        i--;
-                        break;}} 
-        i++;
-}
-for (int j = 0; j<10;j++){
-        printf("[%d,%d]\t",mine_pos[j].x,mine_pos[j].y);
-}
-}
-
-
+ for (int y = 0 ; y <HEIGHT;y++){
+        for (int x = 0; x<WIDTH;x++){
+            if (x<Grid_size || (x>(320-Grid_size)))
+            {
+                put_pixel(x,y,0xE8E8E8, framebuffer);
+            }
+            else if (y<Grid_size*2 || y>(200-Grid_size))
+            {
+                put_pixel(x,y,0xE8E8E8,framebuffer);
+            }
+            else if (x%Grid_size==0)
+            {
+                put_pixel(x,y,0x0000FF,framebuffer);
+            }
+            else if (y%Grid_size==0)
+            {
+                put_pixel(x,y,0x0000FF,framebuffer);
+            }
+        }
+    }
+    for (int i = 0; i<SIZE;i++)
+    {
+        draw_mine(mines[i].x,mines[i].y,framebuffer);
+    }
+    for (int i = 0; i< W_BOUND+1; i++){
+        for (int j = 0; j < H_BOUND+1; j++){
+            if (!in_list_or_not(i,j,mines)){
+                switch (num_of_mines(i,j,mines))
+                {
+                case 0:
+                    break;
+                case 1:
+                    draw_one(i,j,framebuffer);
+                    break;
+                case 2:
+                    draw_two(i,j,framebuffer);
+                    break;
+                case 3: 
+                    draw_three(i,j,framebuffer);
+                    break;
+                case 4:
+                draw_four(i,j,framebuffer);
+                    break;
+                case 5:
+                    draw_five(i,j,framebuffer);
+                    break;
+                case 6:
+                    draw_six(i,j,framebuffer);
+                    break;
+                case 7:
+                    draw_seven(i,j,framebuffer);
+                    break;
+                case 8:
+                    draw_eight(i,j,framebuffer);
+                default:
+                    break;
+                }
+            }
+        }
+        
