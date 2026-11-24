@@ -2,7 +2,7 @@ CC = gcc
 CFLAGS = -Wall -Wextra -std=c11
 SDL_FLAGS = $(shell pkg-config --cflags --libs sdl3)
 
-TARGET = work
+TARGET = minesweeper
 SOURCE = main.c games/mines.c 
 
 all:
