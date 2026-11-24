@@ -18,9 +18,12 @@ void clear(ui32 color){
 }
 int main(void) {
     Pos locl[50];
+    for (int q = 0; q<=50;q++){
+        locl[q].x = -1;
+        locl[q].y = -1;
+    }
     // Pos locr[60];
-    Pos l = {100,100};
-    Pos r = {100,100};
+
     int ol=0;
     int or =0;
     srand(time(NULL));
@@ -70,8 +73,8 @@ int main(void) {
     ui32 frame = 0;
     while(is_running){
     ui64 start = SDL_GetPerformanceCounter();
-    Pos l0 = l;
-    Pos r0 = r;
+    Pos l = {-1,-1};
+    Pos r = {-1,-1};
 		while(SDL_PollEvent(&event)){
 			if(event.type == SDL_EVENT_QUIT){
 				is_running = 0;
@@ -90,12 +93,17 @@ int main(void) {
     clear(0x00FFFF);
     // Below this all the graphics thing are done
     
-    if (!(l0.x == l.x && l0.y == l.y)){
+    if (l.x >=0 && l.y >=0){
         locl[ol].x = l.x; 
         locl[ol].y= l.y;
         ol++;
     }
-    if (r0.x != r.x && r0.y != r.y){
+    // if (frame%60==0){
+    //     for (int i = 0; i< ol+1; i++){
+    //         SDL_Log("[%d,%d]", locl[i].x, locl[i].y );
+    // }}
+    
+    if (r.x>=0 && r.y >= 0){
         // locr[or].x = r.x; 
         // locr[or].y= r.y;
         //flag_at(r.x,r.y,framebuffer,mines);

@@ -171,7 +171,8 @@ void draw_eight(int x,int y, int arr[] ){
     }
 }
 void dig_at(int i,int j, int arr[], Pos mine[]){
-    if (!in_list_or_not(i,j,mine)){
+    if (i>= 0 && j>=0 && i <= 20 && j <=20){
+        if (!in_list_or_not(i,j,mine)){
                 switch (num_of_mines(i,j,mine))
                 {
                 case 0:
@@ -203,5 +204,5 @@ void dig_at(int i,int j, int arr[], Pos mine[]){
                     break;
                 }
             }
-
+    }
 }
